@@ -1,5 +1,5 @@
-[submodule "mizuki"]
-	path = mizuki
+[submodule "yunluoblog-web"]
+	path = yunluoblog-web
 	url = https://github.com/yunluoxincheng/YunLuoBlog.git
 [submodule "yunluoblog-server"]
 	path = yunluoblog-server

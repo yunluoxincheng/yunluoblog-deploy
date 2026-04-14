@@ -32,7 +32,7 @@ services:
       - "${SERVER_PORT}:8080"
 
   web:
-    build: ./mizuki
+    build: ./yunluoblog-web
     container_name: yunluoblog-web
     restart: unless-stopped
 
