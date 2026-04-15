@@ -18,3 +18,8 @@ target/
 
 ### PostgreSQL data (if mounted locally) ###
 pgdata/
+
+### Local agent files ###
+.claude/
+AGENTS.md
+nul
