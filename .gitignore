@@ -21,5 +21,12 @@ pgdata/
 
 ### Local agent files ###
 .claude/
+.kilocode/
 AGENTS.md
+
+### OpenSpec ###
+openspec/
+
+### GitHub ###
+.github/
 nul
