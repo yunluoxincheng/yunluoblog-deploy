@@ -9,8 +9,6 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -42,9 +40,22 @@ services:
       - "${SERVER_PORT}:8080"
 
   web:
-    build: ./yunluoblog-web
+    build:
+      context: ./yunluoblog-web
+      args:
+        VITE_API_BASE_URL: http://server:8080
     container_name: yunluoblog-web
-    restart: unless-stopped
+    command:
+      [
+        "sh",
+        "-c",
+        "pnpm install --frozen-lockfile --ignore-workspace && pnpm exec astro build",
+      ]
+    volumes:
+      - ./yunluoblog-web/dist:/app/dist
+    depends_on:
+      server:
+        condition: service_healthy
 
   nginx:
     image: nginx:alpine
@@ -53,6 +64,8 @@ services:
     ports:
       - "${NGINX_PORT}:80"
     volumes:
+      - ./yunluoblog-web/dist:/usr/share/nginx/html:ro
+      - ./uploads:/app/uploads:ro
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - web
